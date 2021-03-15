@@ -15,7 +15,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class BurgerJoint {
@@ -256,7 +255,6 @@ public class BurgerJoint {
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-
                 lines.add(line);
             }
 
@@ -265,6 +263,6 @@ public class BurgerJoint {
             throw new IllegalStateException(e);
         }
 
-        new BurgerJoint(lines);
+        (new BurgerJoint(lines)).processOrders();
     }
 }
