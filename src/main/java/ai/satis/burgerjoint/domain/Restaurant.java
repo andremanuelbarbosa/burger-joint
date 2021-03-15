@@ -1,11 +1,8 @@
 package ai.satis.burgerjoint.domain;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Restaurant {
@@ -16,7 +13,7 @@ public class Restaurant {
     private final Map<Equipment, Integer> equipmentCounts;
     private final Map<Equipment, Integer> equipmentTimes;
     private final Map<Ingredient, Integer> ingredients;
-    private final List<Order> orders;
+    private final Map<String, Order> orders;
 
     public Restaurant(String input) {
 
@@ -37,7 +34,7 @@ public class Restaurant {
         equipmentCounts = Maps.newHashMap();
         equipmentTimes = Maps.newHashMap();
         ingredients = Maps.newHashMap();
-        orders = Lists.newArrayList();
+        orders = Maps.newHashMap();
 
         initEquipment(arguments[1], arguments[2]);
         initEquipment(arguments[3], arguments[4]);
@@ -112,7 +109,7 @@ public class Restaurant {
         return ingredients;
     }
 
-    public List<Order> getOrders() {
+    public Map<String, Order> getOrders() {
 
         return orders;
     }

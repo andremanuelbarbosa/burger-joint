@@ -59,4 +59,51 @@ public class BurgerJointTest {
         assertEquals(1, burgerJoint.getRestaurants().size());
         assertEquals(12, burgerJoint.getRestaurants().get("R1").getOrders().size());
     }
+
+    @Test
+    public void shouldRejectOrderOnProcessOrdersWhenCookingTimeRunsOut() {
+
+        final BurgerJoint burgerJoint = new BurgerJoint(Lists.newArrayList(
+                "R1,1C,7,3A,2,2P,1,100,200,200,100,100",
+                "R1,2020-12-08 19:15:31,O1,BLT,LT,VLT",
+                "R1,2020-12-08 19:15:31,O2,BLT,LT,VLT",
+                "R1,2020-12-08 19:15:31,O3,BLT,LT,VLT"));
+
+        burgerJoint.processOrders();
+    }
+
+    @Test
+    public void shouldRejectOrderOnProcessOrdersWhenAssemblingTimeRunsOut() {
+
+        final BurgerJoint burgerJoint = new BurgerJoint(Lists.newArrayList(
+                "R1,4C,3,1A,8,2P,1,100,200,200,100,100",
+                "R1,2020-12-08 19:15:31,O1,BLT,LT,VLT",
+                "R1,2020-12-08 19:15:31,O2,BLT,LT,VLT",
+                "R1,2020-12-08 19:15:31,O3,BLT,LT,VLT"));
+
+        burgerJoint.processOrders();
+    }
+
+    @Test
+    public void shouldRejectOrderOnProcessOrdersWhenPackagingTimeRunsOut() {
+
+        final BurgerJoint burgerJoint = new BurgerJoint(Lists.newArrayList(
+                "R1,4C,3,3A,2,1P,7,100,200,200,100,100",
+                "R1,2020-12-08 19:15:31,O1,BLT,LT,VLT",
+                "R1,2020-12-08 19:15:31,O2,BLT,LT,VLT",
+                "R1,2020-12-08 19:15:31,O3,BLT,LT,VLT"));
+
+        burgerJoint.processOrders();
+    }
+
+    @Test
+    public void shouldRejectOrderOnProcessOrdersWhenIngredientRunsOut() {
+
+        final BurgerJoint burgerJoint = new BurgerJoint(Lists.newArrayList(
+                "R1,4C,1,3A,2,2P,1,1,200,200,100,100",
+                "R1,2020-12-08 19:15:31,O1,BLT,LT,VLT",
+                "R1,2020-12-08 19:15:31,O3,BLT,LT,VLT"));
+
+        burgerJoint.processOrders();
+    }
 }

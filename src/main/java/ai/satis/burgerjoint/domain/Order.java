@@ -5,12 +5,13 @@ import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Set;
 
-public class Order {
+public class Order implements Comparable<Order> {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -18,8 +19,12 @@ public class Order {
 
     private final String restaurantId;
     private final LocalDateTime dateTime;
+    private final long dateTimeMillis;
     private final String id;
     private final List<Burger> burgers;
+
+    private Status status;
+    private LocalDateTime completedTime;
 
     public Order(String input) {
 
@@ -40,6 +45,7 @@ public class Order {
         try {
 
             dateTime = LocalDateTime.parse(arguments[1], DATE_TIME_FORMATTER);
+            dateTimeMillis = dateTime.atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli();
 
         } catch (DateTimeParseException e) {
 
@@ -66,6 +72,11 @@ public class Order {
         return dateTime;
     }
 
+    public long getDateTimeMillis() {
+
+        return dateTimeMillis;
+    }
+
     public String getId() {
 
         return id;
@@ -74,6 +85,37 @@ public class Order {
     public List<Burger> getBurgers() {
 
         return burgers;
+    }
+
+    public Status getStatus() {
+
+        return status;
+    }
+
+    public void setStatus(Status status) {
+
+        this.status = status;
+    }
+
+    public LocalDateTime getCompletedTime() {
+
+        return completedTime;
+    }
+
+    public void setCompletedTime(LocalDateTime completedTime) {
+
+        this.completedTime = completedTime;
+    }
+
+    @Override
+    public int compareTo(Order o) {
+
+        return dateTime.compareTo(o.getDateTime());
+    }
+
+    public enum Status {
+
+        ACCEPTED, REJECTED;
     }
 
     public static class Burger {
